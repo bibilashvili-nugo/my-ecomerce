@@ -6,6 +6,8 @@ import Link from "next/link";
 import React from "react";
 import AddToWishlistButton from "./AddToWishlistButton";
 import { Title } from "./ui/text";
+import PriceView from "./PriceView";
+import AddToCartButton from "./AddToCartButton";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
@@ -60,10 +62,10 @@ const ProductCard = ({ product }: { product: Product }) => {
         )}
         <Title className="text-sm line-clamp-1">{product?.name}</Title>
         <div className="flex items-center gap-2">
-          <div className="flex items-center">
+          <div className="flex items-center gap-0.5">
             {[...Array(5)].map((_, index) => (
               <StarIcon
-                size={13}
+                size={12}
                 key={index}
                 className={
                   index < 4
@@ -74,8 +76,24 @@ const ProductCard = ({ product }: { product: Product }) => {
               />
             ))}
           </div>
-          <p className="text-shop_light_text">5 Reviews</p>
+          <p className="text-shop_light_text text-xs tracking-wide">
+            5 Reviews
+          </p>
         </div>
+        <div className="flex items-center gap-2.5">
+          <p className="font-medium">In Stock</p>
+          <p
+            className={` ${product?.stock === 0 ? "text-red-600" : "text-shop_light_green font-semibold"}`}
+          >
+            {(product?.stock as number) > 0 ? product?.stock : "unavailable"}
+          </p>
+        </div>
+        <PriceView
+          price={product?.price}
+          discount={product?.discount}
+          className="text-sm"
+        />
+        <AddToCartButton product={product} className="w-36 rounded-full" />
       </div>
     </div>
   );
